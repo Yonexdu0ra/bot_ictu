@@ -1,7 +1,7 @@
 import checkSetAccount from "../util/bot/checkSetAccount.js";
 import typingMessage from "../util/bot/typingMessage.js";
 import checkPermisson from "../util/bot/checkPermisson.js";
-
+import Key from "../model/Key.js";
 async function remove_key({ data, query }) {
   const message = query.message;
   const chat_id = message.chat.id;
