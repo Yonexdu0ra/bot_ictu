@@ -14,11 +14,11 @@ async function qr(msg, match) {
     const { value, command } = isRedundantCommand;
     const { editMessage, deleteMessage } = await typingMessage(this, {
       chat_id,
-      message: "Đang tạo mã QR code...",
+      message: "Đang tạo mã **QR code** ...",
     });
     if (!value.trim() || value.length < 1) {
       await editMessage(
-        `Vui lòng nhập theo cú pháp: \`${command}\` *Nội dung bạn muốn chuyển đổi thành mã QR code*`
+        `Vui lòng nhập theo cú pháp: \`${command}\` **xxx**\n\nTrong đó **xxx** là nội dung bạn muốn chuyển thành mã **QR code**`
       );
       return;
     }

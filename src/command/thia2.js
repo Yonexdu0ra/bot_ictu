@@ -20,7 +20,7 @@ async function thia2(msg, match) {
     });
     if (!value.trim()) {
       await editMessage(
-        `Vui lòng điền nội dung theo cú pháp \`${command} kèm theo email bạn cần lấy đáp án\`\n\nVí dụ: *${command}* DTC1234567890@ictu.edu.vn\n\n⚠️ *Lưu ý*: Nhập đầy đủ @ictu.edu.vn`
+        `Vui lòng điền nội dung theo cú pháp \`${command} DTC1234567890@ictu.edu.vn\`\n\nTrong đó **DTC1234567890@ictu.edu.vn** là email mà bạn muốn lấy đáp án\n\nLưu ý nhập đầy đủ **@ictu.edu.vn**`
       );
       return;
     }

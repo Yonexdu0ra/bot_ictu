@@ -35,13 +35,13 @@ async function lms_exercise(msg, match) {
 
     if (!accountData) {
       await editMessage(
-        `Vui lòng điền username và password để sử  dụng chức năng này.`
+        `Chức năng này cần bạn cung cấp **username** và **password** của **LMS** để sử dụng !\n\nBạn có thể cung cấp bằng cách gửi tin nhắn với cú pháp: \n\n\/set_user - để thiết lập **username**\n\n/set_pass - để thiết lập **password**`
       );
       return;
     }
     if (!accountData.key) {
       await editMessage(
-        `Để sử dụng chức năng này bạn cần liên hệ [${global.ictu_data.ADMIN_NAME}](${global.ictu_data.CONTACT_URL}) để lấy key nhé`
+        `Chức năng này cần bạn cung cấp **KEY** để sử dụng !\n\nBạn có thể cung cấp bằng cách gửi tin nhắn với cú pháp: \n\n\/set_key - để thiết lập **key**\n\nNếu bạn không có **KEY** vui lòng liên hệ [${global.ictu_data.ADMIN_NAME}](${global.ictu_data.CONTACT_URL}).`
       );
       return;
     }
@@ -49,12 +49,12 @@ async function lms_exercise(msg, match) {
     const isKey = await Key.findOne({ key: accountData.key });
     if (!isKey || isKey.count < 1) {
       await editMessage(
-        `Rất tiếc key của bạn hết lượt sử dụng rùi liên hệ [${global.ictu_data.ADMIN_NAME}](${global.ictu_data.CONTACT_URL}) để tăng thêm lượt nhé !`
+        `Rất tiếc **KEY** của bạn hết lượt sử dụng rồi liên hệ [${global.ictu_data.ADMIN_NAME}](${global.ictu_data.CONTACT_URL}) để tăng thêm lượt nhé !`
       );
       return;
     }
     if (isKey.type !== "TEST") {
-      await editMessage(`Rất tiếc key của bạn chỉ có thể dùng cho Tua video!`);
+      await editMessage(`Rất tiếc **KEY** của bạn không thể sử dụng chức năng này!`);
       return;
     }
 
@@ -62,12 +62,16 @@ async function lms_exercise(msg, match) {
       username: accountData.username,
       password: accountData.password,
     });
+    let text = "**Thông tin tiến trình**\n\n";
     if (data.code != "success") {
+      text += `**Đăng nhập**: _Thất bại_\n\n**Ghi chú**: _${data.message}_\n\n`;
       await editMessage(`\`\`\`JSON\n${JSON.stringify(data, null, 2)}\`\`\``);
       return;
     }
-    await editMessage("Đăng nhập thành công");
-    const { url, university } = await getUrlByUsername(accountData.username);
+    text += `**Đăng nhập**: _thành công_\n\n`
+    const { url, university } = getUrlByUsername(accountData.username);
+    text += `**Trường**: _${university}_\n\n`
+    await editMessage(text);
     const token = data.access_token;
     const profile = await getDataByQueryLMS(
       `${url}/${global.ictu_data.PROFILE_LMS}`,
@@ -87,7 +91,8 @@ async function lms_exercise(msg, match) {
         token,
       }
     );
-    await editMessage(`Hello ${userProfile.data[0].full_name}`);
+    text += `**Họ tên**: _${userProfile.data[0].full_name}_\n\n`
+    
     const listYear = await getDataByQueryLMS(
       `${url}/${global.ictu_data.CLASS_STUDENT_LMS}`,
       {
@@ -102,6 +107,8 @@ async function lms_exercise(msg, match) {
         token,
       }
     );
+    text += `**Năm học**: _${listYear.data.at(-1).namhoc.replace('_', '-')}_\n\n**Học kỳ**: _${listYear.data.at(-1).hocky}_\n\n`
+    await editMessage(text);
     const listClassIdCourse = await getDataByQueryLMS(
       `${url}/${global.ictu_data.CLASS_STUDENT_LMS}`,
       {
@@ -126,9 +133,6 @@ async function lms_exercise(msg, match) {
     );
     if (listClassIdCourse.data) {
       const inline_keyboard = [];
-      await editMessage(
-        `*${userProfile.data[0].full_name}* ơi đây là những môn học kì này cùa bạn hãy chọn môn bạn muốn lấy đáp án ở dưới đây: `
-      );
       for (const course of listClassIdCourse.data) {
         const classData = await getDataByQueryLMS(
           `${url}/${global.ictu_data.CLASS_LMS}/${course.class_id}`,
@@ -159,8 +163,9 @@ async function lms_exercise(msg, match) {
           callback_data: `CLOSE`,
         },
       ]);
-      global[`access_token_${accountData.username}`] = token;
-      await editMessage(`Chọn môn học bạn muốn lấy đáp án (${university}): `, {
+      // global[`access_token_${accountData.username}`] = token;
+      text += `**Chọn môn học bạn muốn lấy đáp án**`
+      await editMessage(text, {
         reply_markup: {
           inline_keyboard,
         },

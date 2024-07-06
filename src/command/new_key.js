@@ -25,11 +25,11 @@ async function new_key(msg, match) {
 
     if (!listAllowId.includes(msg.from.id)) {
       await editMessage(
-        `Rất tiếc bạn không có quyền sử dụng chức năng này liên hệ [${global.ictu_data.ADMIN_NAME}](${global.ictu_data.CONTACT_URL}) để lấy key nhé`
+        `Rất tiếc bạn không có quyền sử dụng chức năng này liên hệ [${global.ictu_data.ADMIN_NAME}](${global.ictu_data.CONTACT_URL}) để lấy **KEY** nhé`
       );
       return;
     }
-    await editMessage("Hãy chọn loại key bạn muốn thêm mới.", {
+    await editMessage("Hãy chọn loại **KEY** bạn muốn thêm mới.", {
       reply_markup: {
         inline_keyboard: [
           [

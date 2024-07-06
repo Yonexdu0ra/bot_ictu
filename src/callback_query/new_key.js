@@ -2,6 +2,7 @@ import checkSetAccount from "../util/bot/checkSetAccount.js";
 import typingMessage from "../util/bot/typingMessage.js";
 import checkPermisson from "../util/bot/checkPermisson.js";
 import Key from "../model/Key.js";
+import generateUniqueId from "../util/generateUniqueId.js";
 async function newKey({ data, query }) {
   const message = query.message;
   const json = JSON.parse(data);
@@ -17,22 +18,13 @@ async function newKey({ data, query }) {
     }
     const { editMessage } = await typingMessage(this, {
       chat_id,
-      message: "Đang tạo mới key",
+      message: "Đang tạo mới **KEY**",
     });
     if (!checkPermisson(chat_id)) {
       await editMessage("Bạn không có quyền sử dụng chức năng này");
       return;
     }
-    function generateUniqueId(sign) {
-      // Lấy số miliseconds tính từ 1/1/1970
-      const timestamp = Date.now().toString(36);
-      // Tạo một chuỗi ngẫu nhiên
-      const randomString = Math.random().toString(36).substring(2, 15);
-      // Kết hợp chuỗi miliseconds và chuỗi ngẫu nhiên
-      // để tạo ra chuỗi có khả năng duy nhất cao
-      return `${sign}_${timestamp}${randomString}`.toLocaleUpperCase();
-    }
-
+    
     const newKey = generateUniqueId(`${global.ictu_data.SIGN}_${json.type}`);
 
     const keyData = await Key.create({
@@ -42,7 +34,37 @@ async function newKey({ data, query }) {
     });
 
     await editMessage(
-      `*Key*:  \`${keyData.key}\`\n\n*Loại*: ${keyData.type}\n\n*Số lượt còn lại*: ${keyData.count}`
+      `**Key**:  \`${keyData.key}\`\n\n**Loại**: ${keyData.type}\n\n**Số lượt còn lại**: ${keyData.count}`,
+      {
+        reply_markup: {
+          inline_keyboard: [
+            [
+              {
+                text: `Tăng lượt`,
+                callback_data: `ADD_KEY-${JSON.stringify({
+                  key: keyData.key,
+                })}`,
+              },
+              {
+                text: `Giảm lượt`,
+                callback_data: `REDUCE_KEY-${JSON.stringify({
+                  key: keyData.key,
+                })}`,
+              },
+              {
+                text: `Xóa Key`,
+                callback_data: `REMOVE_KEY-${JSON.stringify({
+                  key: keyData.key,
+                })}`,
+              },
+              {
+                text: "Close",
+                callback_data: "CLOSE",
+              },
+            ],
+          ],
+        },
+      }
     );
   } catch (error) {
     console.error(error);

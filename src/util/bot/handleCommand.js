@@ -17,6 +17,7 @@ import set_key from "../../command/set_key.js";
 import get_key from "../../command/get_key.js";
 import dice from "../../command/dice.js";
 import thiA2 from "../../command/thiA2.js";
+import video_data from "../../command/video_data.js";
 const handleCommand = [
   {
     regex: /\/ask/,
@@ -25,6 +26,10 @@ const handleCommand = [
   {
     regex: /\/thia2/,
     handler: thiA2,
+  },
+  {
+    regex: /\/video_data/,
+    handler: video_data,
   },
   {
     regex: /\/timetables/,

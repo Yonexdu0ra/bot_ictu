@@ -20,7 +20,7 @@ async function tracking(bot, message, allow_id = []) {
                 ? message.chat.id
                 : message?.from?.id,
             date: message.date,
-            user_by: message.chat.username
+            user_by: message.chat.first_name
               ? `${message.chat.first_name} ${
                   message?.chat?.last_name || ""
                 }`.trim()
@@ -43,7 +43,7 @@ async function tracking(bot, message, allow_id = []) {
               [
                 {
                   text: `Phản hồi ${
-                    message.chat.username
+                    message.chat.first_name
                       ? `${message.chat.first_name} ${
                           message?.chat?.last_name || ""
                         }`.trim()

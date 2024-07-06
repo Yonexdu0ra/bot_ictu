@@ -31,12 +31,12 @@ async function get_key(msg, match) {
       );
       return;
     }
-    editMessage(`Danh sách key:`);
-    if (!value.trim()) {
+    if (!value) {
       const listKey = await Key.find({});
       if (!listKey) {
         editMessage(`Chưa có key nào 👀 ! `);
       }
+      await editMessage(`**Danh sách KEY**:`);
       for (const keyData of listKey) {
         await this.sendMessage(
           chat_id,
@@ -76,6 +76,48 @@ async function get_key(msg, match) {
         );
       }
       return;
+    } else {
+      const findKey = await Key.findOne({ key: value });
+      if (!findKey) {
+        await editMessage(`**Key** \`${value}\` không tồn tại`);
+        return;
+      }
+      await this.sendMessage(
+        chat_id,
+        `**Key**:  \`${findKey.key}\`\n*Loại*: ${findKey.type}\n*Số lượt còn lại*: ${findKey.count}`,
+        {
+          parse_mode: "Markdown",
+          message_id,
+          reply_markup: {
+            inline_keyboard: [
+              [
+                {
+                  text: `Tăng lượt`,
+                  callback_data: `ADD_KEY-${JSON.stringify({
+                    key: findKey.key,
+                  })}`,
+                },
+                {
+                  text: `Giảm lượt`,
+                  callback_data: `REDUCE_KEY-${JSON.stringify({
+                    key: findKey.key,
+                  })}`,
+                },
+                {
+                  text: `Xóa Key`,
+                  callback_data: `REMOVE_KEY-${JSON.stringify({
+                    key: findKey.key,
+                  })}`,
+                },
+                {
+                  text: "Close",
+                  callback_data: "CLOSE",
+                },
+              ],
+            ],
+          },
+        }
+      );
     }
   } catch (error) {
     console.log(error);

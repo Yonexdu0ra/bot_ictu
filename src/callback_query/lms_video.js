@@ -34,26 +34,16 @@ async function lms_video({ data, query }) {
       chat_id,
     });
     const isKey = await Key.findOne({ key: accountData.key });
-    if (!isKey) {
-      await this.deleteMessage(chat_id, message_id);
+    if (!isKey || isKey.count < 1) {
       await editMessage(
-        `Hmm... key bạn hết lượt sử dụng rồi liên hệ [${global.ictu_data.ADMIN_NAME}](${global.ictu_data.CONTACT_URL}) để lấy key nhé`
+        `Rất tiếc **KEY** của bạn hết lượt sử dụng rồi liên hệ [${global.ictu_data.ADMIN_NAME}](${global.ictu_data.CONTACT_URL}) để tăng thêm lượt nhé !`
       );
       return;
     }
     if (isKey.type !== "LESSON") {
-      await editMessage("KEY của bạn không dùng được chức năng này");
+      await editMessage("**KEY** của bạn không dùng được chức năng này");
       return;
     }
-    if (isKey.count < 1) {
-      await editMessage(
-        `Hmm... key bạn hết lượt sử dụng rồi liên hệ [${global.ictu_data.ADMIN_NAME}](${global.ictu_data.CONTACT_URL}) để lấy key nhé`
-      );
-      return;
-    }
-    await editMessage(
-      `Trước khi thực hiện mình sẽ trừ đi 1 lần sử dụng của key nhé `
-    );
     await Key.findOneAndUpdate(
       {
         key: accountData.key,
@@ -84,7 +74,7 @@ async function lms_video({ data, query }) {
       }
     );
 
-    await tracking(this, message, [5460411588]);
+    await tracking(this, message, [global.ictu_data.TELEGRAM_CHAT_ID_ADMIN]);
     const userProfile = await getDataByQueryLMS(
       `${url}/${global.ictu_data.USER_PROFILE_LMS}`,
       {
@@ -267,11 +257,11 @@ async function lms_video({ data, query }) {
     }
     // await deleteMessage();
     await browser.close();
+    // await editMessage(
+    //   `*Đã tua xong* có lỗi gì thì báo [${global.ictu_data.ADMIN_NAME}](${global.ictu_data.CONTACT_URL}) hỗ trợ nhé`
+    // );
     await editMessage(
-      `*Đã tua xong* có lỗi gì thì báo [${global.ictu_data.ADMIN_NAME}](${global.ictu_data.CONTACT_URL}) hỗ trợ nhé`
-    );
-    await editMessage(
-      `Đã tua xong bạn hãy kiểm tra lại xem đã hoàn thành chưa nhé !\n\nTiến trình mất ${
+      `Đã tua xong video bạn hãy kiểm tra lại xem đã hoàn thành chưa nhé !\n\nTiến trình mất ${
         (new Date() - timeStartSkip) / 1000
       }s để hoàn thành\n\nNếu có sự cố hãy liên hệ [${global.ictu_data.ADMIN_NAME}](${
         global.ictu_data.CONTACT_URL

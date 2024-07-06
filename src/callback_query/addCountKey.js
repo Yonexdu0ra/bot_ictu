@@ -26,7 +26,6 @@ async function addCountKey({ data, query }) {
       return;
     }
     const isKeyData = await Key.findOne({ key: json.key });
-    // console.log(isKeyData);
     const newKeyData = await Key.findOneAndUpdate(
       { key: json.key },
       {

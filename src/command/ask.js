@@ -20,7 +20,7 @@ async function ask(message, match) {
     });
     if (!value.trim()) {
       await editMessage(
-        `Vui lòng điền nội dung theo cú pháp \`${command}\` *Câu hỏi bạn muốn hỏi*`
+        `Vui lòng điền nội dung theo cú pháp \`${command} Xin chào\`\n\nTrong đó **Xin chào** là câu hỏi bạn muốn hỏi **AI**`
       );
       return;
     }
@@ -47,7 +47,7 @@ async function ask(message, match) {
     }
     await editMessage(`${text}\n${Math.floor((new Date() - date) / 1000)}s`);
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     await this.sendMessage(chat_id, `Thử lại sau nhé`);
     return;
   }

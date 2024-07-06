@@ -22,9 +22,8 @@ async function set_pass(msg, match) {
       {},
       false
     );
-    await this.deleteMessage(chat_id, message_id);
     if (!value.trim()) {
-      await editMessage(`Vui lòng điền theo cú pháp: \`${command} Password\``);
+      await editMessage(`Vui lòng điền theo cú pháp: \`${command} Password\`\n\nTrong đó **Password** là mật khẩu **LMS** hoặc **DKTC** của bạn`);
       return;
     }
     let acccount = await Account.findOne({ chat_id });
@@ -40,6 +39,7 @@ async function set_pass(msg, match) {
           password: value.trim(),
         }
       );
+      await this.deleteMessage(chat_id, message_id);
       await editMessage(`set *Password* thành công`);
       return;
     }

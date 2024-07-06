@@ -20,7 +20,12 @@ const typingMessage = async (
           console.log(error);
         }
       },
-      editMessage: async (text, optionsEditMessage = {}) => {
+      editMessage: async (
+        text,
+        optionsEditMessage = {
+          parse_mode: "Markdown",
+        }
+      ) => {
         try {
           await bot.editMessageText(text, {
             chat_id: msg.chat.id,

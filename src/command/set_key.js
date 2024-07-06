@@ -24,17 +24,17 @@ async function set_key(msg, match) {
     );
     if (value.length < 1) {
       await editMessage(
-        `Vui lòng nhập theo cúp pháp: \`${command}\`  *key bạn được cung cấp*`
+        `Vui lòng nhập theo cú pháp: \`${command}\`  **KEY**\n\nTrong đó **KEY** là mã bạn được [${global.ictu_data.ADMIN_NAME}](${global.ictu_data.CONTACT_URL}) cung cấp\n\nLưu ý: có nhiều loại **KEY** khác nhau vui lòng nhập đúng loại key mà chức năng của bạn muốn sử dụng`
       );
       return;
     }
-    await editMessage(`Đợi chút để mình xác thực *key* nhé`);
+    await editMessage(`Đợi chút để mình xác thực **KEY** nhé`);
     const isHasKey = await Key.findOne({
       key: value,
     });
     if (!isHasKey) {
       await editMessage(
-        `key không hợp lệ vui lòng liên hệ [${global.ictu_data.ADMIN_NAME}](${global.ictu_data.CONTACT_URL}) để lấy key`
+        `**KEY** không hợp lệ vui lòng liên hệ [${global.ictu_data.ADMIN_NAME}](${global.ictu_data.CONTACT_URL}) để lấy **KEY**`
       );
       return;
     }
@@ -57,9 +57,7 @@ async function set_key(msg, match) {
     }
     await this.deleteMessage(chat_id, message_id);
     await editMessage(
-      `set key thành công key còn ${isHasKey.count} lần sử dụng nhé [${
-        msg.from.first_name
-      } ${msg.from.last_name || ""}](tg://user?id=${msg.from.id}) !`
+      `set **KEY** thành công **KEY** còn **${isHasKey.count}** lần sử dụng !`
     );
   } catch (error) {
     console.log(error);
