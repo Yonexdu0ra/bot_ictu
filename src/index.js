@@ -12,8 +12,6 @@ import listCommandInfo from "./util/bot/listCommandInfo.js";
 import handleCommand from "./util/bot/handleCommand.js";
 import callback_query from "./callback_query/index.js";
 import inline_query from "./inline_query/index.js";
-import checkBalances from "./util/checkBalances.js";
-import { CronJob } from "cron";
 
 import fs from "fs";
 
@@ -31,13 +29,7 @@ const app = express();
     const bot = new botTelegram(process.env.ACCESS_TOKEN_TELEGRAM, {
       polling: true,
     });
-    // const job = new CronJob(
-    //   "*/5 * * * *", // cronTime
-    //   checkBalances.bind(bot),
-    //   null, // onComplete
-    //   true, // start
-    //   "Asia/Ho_Chi_Minh" // timeZone
-    // );
+    
 
     bot.setMyCommands(listCommandInfo);
     handleCommand.forEach((obj) => {
