@@ -47,7 +47,7 @@ async function ask(message, match) {
     }
     await editMessage(`${text}\n${Math.floor((new Date() - date) / 1000)}s`);
   } catch (error) {
-    // console.log(error);
+    console.log(error);
     await this.sendMessage(chat_id, `Thử lại sau nhé`);
     return;
   }

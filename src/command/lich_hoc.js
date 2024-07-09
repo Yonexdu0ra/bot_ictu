@@ -25,7 +25,9 @@ async function getLichHocICTU(msg, match) {
     }
     const isData = getLichHoc(isSetAccount.username, isSetAccount.password);
     let newData = await isData.next();
-    await editMessage(await newData.value.message);
+    await editMessage(await newData.value.message, {
+      parse_mode: 'Markdown'
+    });
     while (newData.done === false) {
       newData = await isData.next();
       if (
@@ -34,10 +36,14 @@ async function getLichHocICTU(msg, match) {
       ) {
         break;
       }
-      await editMessage(await newData.value.message);
+      await editMessage(await newData.value.message, {
+        parse_mode: 'Markdown'
+      });
     }
     if (newData.value.status === "error") {
-      await editMessage(await newData.value.message);
+      await editMessage(await newData.value.message, {
+        parse_mode: 'Markdown'
+      });
       return;
     }
     let isHasMessage = false;

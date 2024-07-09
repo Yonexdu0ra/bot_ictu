@@ -88,7 +88,7 @@ async function thiA2({ data, query }) {
     }
     const encodeURL = btoa(data2.data);
     await editMessage(
-      `⚠️ Hiệu lực của liên kết này chỉ có thể *dùng 1 lần duy nhất* và liên kết có hiệu lực *khoảng 5 phút* hãy nhanh chóng truy cập và lưu lại thông tin nhé\n\n💡 *Mẹo*: Ở *Window* có thể dùng tổ hợp phím \`Ctrl + s\`,  *Android* ấn \`...\` chọn nút \`download\` để có thể tải lại file để xem sau\n\nNếu gặp sự cố vui lòng liên hệ [Admin](${global.ictu_data.CONTACT_URL})`,
+      `⚠️ Hiệu lực của liên kết này chỉ có thể *dùng 1 lần duy nhất* và liên kết có hiệu lực *khoảng 5 phút* hãy nhanh chóng truy cập và lưu lại thông tin nhé\n\n💡 *Mẹo*: Ở *Window* có thể dùng tổ hợp phím \`Ctrl + s\`,  *Android* ấn \`...\` chọn nút \`download\` để có thể tải lại file để xem sau\n\nNếu gặp sự cố vui lòng liên hệ [Admin](${global.ictu_data.CONTACT_URL}) để được hỗ trợ`,
       {
         parse_mode: "Markdown",
         reply_markup: {

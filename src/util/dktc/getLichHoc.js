@@ -15,9 +15,7 @@ async function* getLichHoc(username, password) {
     });
     if (!isLoginDKTC.status) {
       await browser.close();
-      throw new Error(
-        "Có vẻ như **Tài khoản** hoặc **Mật khẩu** không chính xác"
-      );
+      throw new Error(isLoginDKTC.message);
     }
     yield {
       status: "pending",

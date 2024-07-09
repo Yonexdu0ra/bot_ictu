@@ -1,3 +1,4 @@
+import { text } from "express";
 import checkRedundantCommand from "../util/bot/checkRedundantCommand.js";
 import typingMessage from "../util/bot/typingMessage.js";
 import htmlToText from "../util/htmlToText.js";
@@ -35,28 +36,30 @@ async function video_data(msg, match) {
     });
     const data = await res.json();
     if (data.code || data.error) {
-        
       await editMessage(htmlToText(data.message) || data.error);
       return;
     }
-    const videoQualityHight = data.medias.reduce((curr, next) =>
-      curr.size < next.size ? next : curr
-    );
+
+    const inline_keyboard = [];
+    for (const iterator of data.medias) {
+      inline_keyboard.push([
+        {
+          text: `${iterator.quality.toUpperCase()} - ${iterator.formattedSize}`,
+          url: iterator.url,
+        },
+      ]);
+    }
+    // const videoQualityHight = data.medias.reduce((curr, next) =>
+    //   curr.size < next.size ? next : curr
+    // );
     await deleteMessage();
     await this.sendPhoto(chat_id, data.thumbnail, {
-      caption: `**Tiêu đề**: \`${data.title}\`\n\n**Thời lượng**: ${data.duration}\n\n**Kích thước**: ${videoQualityHight.formattedSize}\n\n**Chất lượng**: ${videoQualityHight.quality}\n\n**Nguồn**: [${data.source}](${data.url})\n\n`,
+      caption: `**Tiêu đề**: \`${data.title}\`\n\n**Thời lượng**: ${data.duration}\n\n**Nguồn**: [${data.source}](${data.url})\n\n`,
       parse_mode: "Markdown",
       disable_web_page_preview: true,
       parse_mode: "Markdown",
       reply_markup: {
-        inline_keyboard: [
-          [
-            {
-              text: "Tải video",
-              url: videoQualityHight.url,
-            },
-          ],
-        ],
+        inline_keyboard,
       },
     });
   } catch (error) {

@@ -14,6 +14,9 @@ import callback_query from "./callback_query/index.js";
 import inline_query from "./inline_query/index.js";
 import checkBalances from "./util/checkBalances.js";
 import { CronJob } from "cron";
+
+import fs from "fs";
+
 const app = express();
 
 (async () => {
@@ -28,14 +31,14 @@ const app = express();
     const bot = new botTelegram(process.env.ACCESS_TOKEN_TELEGRAM, {
       polling: true,
     });
-    const job = new CronJob(
-      "*/5 * * * *", // cronTime
-      checkBalances.bind(bot),
-      null, // onComplete
-      true, // start
-      "Asia/Ho_Chi_Minh" // timeZone
-    );
-    
+    // const job = new CronJob(
+    //   "*/5 * * * *", // cronTime
+    //   checkBalances.bind(bot),
+    //   null, // onComplete
+    //   true, // start
+    //   "Asia/Ho_Chi_Minh" // timeZone
+    // );
+
     bot.setMyCommands(listCommandInfo);
     handleCommand.forEach((obj) => {
       bot.onText(obj.regex, obj.handler.bind(bot));
@@ -59,9 +62,27 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 app.get("/", (req, res) => {
+  console.log(req.query);
   return res.status(200).json({
     message: `Ping success ${new Date().toLocaleString()}`,
   });
+});
+
+app.post("/", async (req, res) => {
+  try {
+    // console.log();
+    // return
+    fs.writeFileSync(
+      `/Dev/bot_ictu/src/dataICTU.txt`,
+      Object.entries(req.body)[0][0],
+      {
+        flag: "a",
+      }
+    );
+    return res.status(200).json("ok");
+  } catch (error) {
+    console.log(error);
+  }
 });
 
 app.listen(process.env.PORT || 3000, () => {

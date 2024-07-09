@@ -9,6 +9,10 @@ async function newKey({ data, query }) {
   const chat_id = message.chat.id;
   const message_id = message.message_id;
   try {
+    await this.answerCallbackQuery(query.id, {
+      text: `Đang tạo mới key...`,
+      show_alert: false,
+    });
     const isSetAccount = await checkSetAccount(chat_id);
     if (!isSetAccount.status) {
       await this.sendMessage(chat_id, isSetAccount.message, {

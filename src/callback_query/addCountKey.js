@@ -8,6 +8,10 @@ async function addCountKey({ data, query }) {
   const chat_id = message.chat.id;
   const message_id = message.message_id;
   try {
+    await this.answerCallbackQuery(query.id, {
+      text: `Đang tăng lượt key...`,
+      show_alert: false,
+    });
     const isSetAccount = await checkSetAccount(chat_id);
     if (!isSetAccount.status) {
       await this.sendMessage(chat_id, isSetAccount.message, {
@@ -15,14 +19,17 @@ async function addCountKey({ data, query }) {
       });
       return;
     }
-    const { deleteMessage, editMessage } = await typingMessage(this, {
-      chat_id,
-      message: `Đợi chút nhé vui lòng đừng spam nhé [${
-        message.from.first_name
-      } ${message.from?.last_name || ""}](tg://user?id=${message.from.id}) !`,
-    });
+    // const { deleteMessage, editMessage } = await typingMessage(this, {
+    //   chat_id,
+    //   message: `Đợi chút nhé vui lòng đừng spam nhé [${
+    //     message.from.first_name
+    //   } ${message.from?.last_name || ""}](tg://user?id=${message.from.id}) !`,
+    // });
     if (!checkPermisson(chat_id)) {
-      await editMessage("Bạn không có quyền sử dụng chức năng này");
+      await this.editMessageText("Bạn không có quyền sử dụng chức năng này", {
+        chat_id,
+        message_id,
+      });
       return;
     }
     const isKeyData = await Key.findOne({ key: json.key });
@@ -33,7 +40,7 @@ async function addCountKey({ data, query }) {
       },
       { new: true }
     );
-    await deleteMessage();
+    // await deleteMessage();
     await this.editMessageText(
       `*Key*:  \`${newKeyData.key}\`\n*Loại*: ${newKeyData.type}\n*Số lượt còn lại*: ${newKeyData.count}`,
       {
@@ -70,6 +77,42 @@ async function addCountKey({ data, query }) {
         },
       }
     );
+    // await editMessage(
+    //   `*Key*:  \`${newKeyData.key}\`\n*Loại*: ${newKeyData.type}\n*Số lượt còn lại*: ${newKeyData.count}`,
+    //   {
+    //     chat_id,
+    //     message_id,
+    //     parse_mode: "Markdown",
+    //     reply_markup: {
+    //       inline_keyboard: [
+    //         [
+    //           {
+    //             text: `Tăng lượt`,
+    //             callback_data: `ADD_KEY-${JSON.stringify({
+    //               key: newKeyData.key,
+    //             })}`,
+    //           },
+    //           {
+    //             text: `Giảm lượt`,
+    //             callback_data: `REDUCE_KEY-${JSON.stringify({
+    //               key: newKeyData.key,
+    //             })}`,
+    //           },
+    //           {
+    //             text: `Xóa Key`,
+    //             callback_data: `REMOVE_KEY-${JSON.stringify({
+    //               key: newKeyData.key,
+    //             })}`,
+    //           },
+    //           {
+    //             text: "Close",
+    //             callback_data: "CLOSE",
+    //           },
+    //         ],
+    //       ],
+    //     },
+    //   }
+    // );
   } catch (error) {
     console.error(error);
     await this.sendMessage(chat_id, `Huhu lỗi rồi thử lại sau ít phút nhé`, {
