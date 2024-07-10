@@ -16,8 +16,8 @@ import new_key from "../../command/new_key.js";
 import set_key from "../../command/set_key.js";
 import get_key from "../../command/get_key.js";
 import dice from "../../command/dice.js";
-import thiA2 from "../../command/thiA2.js";
 import video_data from "../../command/video_data.js";
+import thiA2 from "../../command/thiA2.js";
 const handleCommand = [
   {
     regex: /\/ask/,
