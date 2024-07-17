@@ -104,6 +104,7 @@ const handleCommand = [
     regex: /\/dice/,
     handler: dice,
   },
+  
 ];
 
 export default handleCommand;

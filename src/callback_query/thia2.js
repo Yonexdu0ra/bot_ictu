@@ -8,6 +8,10 @@ async function thiA2({ data, query }) {
   const chat_id = message.chat.id;
   const message_id = message.message_id;
   try {
+    await this.answerCallbackQuery(query.id, {
+      text: `Tiến trình sẽ tốn khoảng 1-2 phút`,
+      show_alert: false,
+    });
     const { editMessage } = await typingMessage(this, {
       chat_id,
       message: "Đợi chút nhé",

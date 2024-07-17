@@ -15,6 +15,7 @@ import inline_query from "./inline_query/index.js";
 
 import fs from "fs";
 
+
 const app = express();
 
 (async () => {
@@ -29,13 +30,11 @@ const app = express();
     const bot = new botTelegram(process.env.ACCESS_TOKEN_TELEGRAM, {
       polling: true,
     });
-    
 
     bot.setMyCommands(listCommandInfo);
     handleCommand.forEach((obj) => {
       bot.onText(obj.regex, obj.handler.bind(bot));
     });
-
     bot.on("error", () => {
       console.log("Bot error ");
       return;
@@ -45,6 +44,7 @@ const app = express();
     });
     bot.on("callback_query", callback_query.bind(bot));
     bot.on("inline_query", inline_query.bind(bot));
+    bot.once('message')
   } catch (error) {
     console.log(error);
   }

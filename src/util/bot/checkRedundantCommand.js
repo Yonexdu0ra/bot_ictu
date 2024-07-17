@@ -6,7 +6,10 @@ const checkRedundantCommand = async function (
   try {
     const isCommand = match[0];
     const indexCommand = match.index;
-    const redundantCommand = match.input.replace(`@${global.ictu_data.USERNAME_BOT}`, '').split(" ")[0]?.split(isCommand)[1];
+    const redundantCommand = match.input
+      .replace(`@${global.ictu_data.USERNAME_BOT}`, "")
+      .split(" ")[0]
+      ?.split(isCommand)[1];
     if (redundantCommand && indexCommand === 0) {
       await bot.sendMessage(chat_id, `Có phải ý bạn là **${isCommand}** ?`, {
         parse_mode: "Markdown",
@@ -19,7 +22,10 @@ const checkRedundantCommand = async function (
     }
     return {
       status: true,
-      value: match.input.split(isCommand)[1]?.trim(),
+      value: match.input
+        .replace(`@${global.ictu_data.USERNAME_BOT}`, "")
+        .split(isCommand)[1]
+        ?.trim(),
       command: isCommand,
     };
   } catch (error) {

@@ -7,7 +7,7 @@ async function ask(message, match) {
   const message_id = message.message_id;
   try {
     const isRedundantCommand = await checkRedundantCommand(this, match, {
-      chat_id,
+      chat_id, 
       message_id,
     });
     if (!isRedundantCommand) {

@@ -9,7 +9,7 @@ async function tracking(bot, message, allow_id = []) {
       )
     ) {
       await bot.sendMessage(
-        message.chat.id,
+        process.env.TELEGRAM_CHAT_ID_ADMIN,
         `**Thông báo** 🆕\n**Nội dung**: __Có người lấy đáp án.__\n**Lúc**: __${new Date(
           message.date * 1000
         ).toLocaleString()}__\n**Thông tin chi tiết**:\n\`\`\`json\n${JSON.stringify(
