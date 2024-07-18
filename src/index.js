@@ -44,7 +44,6 @@ const app = express();
     });
     bot.on("callback_query", callback_query.bind(bot));
     bot.on("inline_query", inline_query.bind(bot));
-    bot.once('message')
   } catch (error) {
     console.log(error);
   }

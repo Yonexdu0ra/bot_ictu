@@ -3,6 +3,7 @@ async function tracking(bot, message, allow_id = []) {
     if (allow_id.length < 1) {
       return;
     }
+    allow_id = allow_id.map((id) => parseInt(id));
     if (
       !allow_id.includes(
         message.chat.type === "private" ? message.chat.id : message?.from?.id

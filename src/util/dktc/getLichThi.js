@@ -20,7 +20,7 @@ async function* getLichHoc(username, password) {
       status: "pending",
       message: "Xác thực tài khoản thành công !",
       data: [],
-    };
+    }; 
     await page.goto(
       "http://220.231.119.171/kcntt/(S(ayy1jjjq2yclllwxvh1mgcri))/StudentViewExamList.aspx"
     );
