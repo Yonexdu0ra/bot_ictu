@@ -1,6 +1,5 @@
 import checkRedundantCommand from "../util/bot/checkRedundantCommand.js";
 import Key from "../model/Key.js";
-import dataConfig from "../config/data.js";
 import typing_message from "../util/bot/typingMessage.js";
 
 async function get_key(msg, match) {
@@ -27,7 +26,7 @@ async function get_key(msg, match) {
 
     if (!listAllowId.includes(msg.from.id)) {
       await editMessage(
-        `Rất tiếc bạn không có quyền sử dụng chức năng này liên hệ [${dataConfig.admin_name}](${dataConfig.contact_url}) để lấy key nhé`
+        `Rất tiếc bạn không có quyền sử dụng chức năng này liên hệ [${global.ictu_data.ADMIN_NAME}](${global.ictu_data.CONTACT_URL}) để lấy key nhé`
       );
       return;
     }
