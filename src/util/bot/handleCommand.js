@@ -18,10 +18,16 @@ import get_key from "../../command/get_key.js";
 import dice from "../../command/dice.js";
 import video_data from "../../command/video_data.js";
 import thiA2 from "../../command/thiA2.js";
+
+import createQrAliniex from "../../command/createQrAliniex.js";
 const handleCommand = [
   {
     regex: /\/ask/,
     handler: ask,
+  },
+  {
+    regex: /\/aliniex/,
+    handler: createQrAliniex,
   },
   {
     regex: /\/thia2/,
@@ -104,7 +110,6 @@ const handleCommand = [
     regex: /\/dice/,
     handler: dice,
   },
-  
 ];
 
 export default handleCommand;
