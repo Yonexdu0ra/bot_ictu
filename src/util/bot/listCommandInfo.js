@@ -5,11 +5,11 @@ export default [
     description: "Lấy thông tin đáp án, câu hỏi bài kiểm tra Thi a2",
   },
   { command: "/dich", description: "Dịch văn bản sang ngôn ngữ khác" },
-  {
-    command: "/lich_hoc",
-    description: "Xem lịch học của bạn trong tuần (ICTU)",
-  },
-  { command: "/lich_thi", description: "Xem lịch thi của bạn (ICTU)" },
+  // {
+  //   command: "/lich_hoc",
+  //   description: "Xem lịch học của bạn trong tuần (ICTU)",
+  // },
+  // { command: "/lich_thi", description: "Xem lịch thi của bạn (ICTU)" },
   {
     command: "/lms_video",
     description: "Tua danh sách các video trên LMS",
@@ -21,7 +21,7 @@ export default [
   { command: "/new_key", description: "Tạo mới key (Admin)" },
   { command: "/set_key", description: "Sửa dụng key" },
   { command: "/get_key", description: "Lấy danh sách key (Admin)" },
-  { command: "/diem_thi", description: "Xem điểm thi của bạn (ICTU)" },
+  // { command: "/diem_thi", description: "Xem điểm thi của bạn (ICTU)" },
   { command: "/set_user", description: "Thiết lập Username" },
   { command: "/set_pass", description: "Thiết lập Password" },
   {

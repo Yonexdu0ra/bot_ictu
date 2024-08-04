@@ -3,9 +3,9 @@ import time_now from "../../command/time_now.js";
 import translate from "../../command/dich.js";
 import weather from "../../command/weather.js";
 import set_user from "../../command/set_user.js";
-import set_pass from "../../command/set_pass.js";
-import lich_hoc from "../../command/lich_hoc.js";
-import lich_thi from "../../command/lich_thi.js";
+// import set_pass from "../../command/set_pass.js";
+// import lich_hoc from "../../command/lich_hoc.js";
+// import lich_thi from "../../command/lich_thi.js";
 import ask from "../../command/ask.js";
 import help from "../../command/help.js";
 import diem_thi from "../../command/diem_thi.js";
@@ -62,18 +62,18 @@ const handleCommand = [
     handler: set_user,
   },
   ,
-  {
-    regex: /\/set_pass/,
-    handler: set_pass,
-  },
-  {
-    regex: /\/lich_hoc/,
-    handler: lich_hoc,
-  },
-  {
-    regex: /\/lich_thi/,
-    handler: lich_thi,
-  },
+  // {
+  //   regex: /\/set_pass/,
+  //   handler: set_pass,
+  // },
+  // {
+  //   regex: /\/lich_hoc/,
+  //   handler: lich_hoc,
+  // },
+  // {
+  //   regex: /\/lich_thi/,
+  //   handler: lich_thi,
+  // },
   {
     regex: /\/diem_thi/,
     handler: diem_thi,
