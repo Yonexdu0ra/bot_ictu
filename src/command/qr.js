@@ -22,13 +22,15 @@ async function qr(msg, match) {
       );
       return;
     }
+    await this.deleteMessage(chat_id, message_id);
     await deleteMessage();
     await this.sendPhoto(
       chat_id,
       `https://api.qrserver.com/v1/create-qr-code/?data=${value.trim()}&size=500x500`,
       {
-        caption: `\`${value.trim()}\``,
-        parse_mode: "Markdown",
+        caption: `||${value.trim()}||`,
+        parse_mode: "MarkdownV2",
+        has_spoiler: true,
       }
     );
   } catch (error) {
